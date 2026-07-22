@@ -4,11 +4,13 @@ package ru.mvrlrd.relauncher.terminal
 data class CommandResult(
     val output: List<String> = emptyList(),
     val isError: Boolean = false,
+    val clearScreen: Boolean = false,
 ) {
     companion object {
         fun ok(vararg lines: String) = CommandResult(lines.toList(), isError = false)
         fun ok(lines: List<String>) = CommandResult(lines, isError = false)
         fun error(vararg lines: String) = CommandResult(lines.toList(), isError = true)
+        fun clear() = CommandResult(clearScreen = true)
     }
 }
 

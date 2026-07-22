@@ -25,9 +25,13 @@ class TerminalViewModel(
 
         val result = executor.execute(command)
         val outputType = if (result.isError) LineType.ERROR else LineType.OUTPUT
-        val newLines = current.lines +
-            TerminalLine(current.prompt + command, LineType.PROMPT) +
-            result.output.map { TerminalLine(it, outputType) }
+        val newLines = if (result.clearScreen) {
+            emptyList()
+        } else {
+            current.lines +
+                TerminalLine(current.prompt + command, LineType.PROMPT) +
+                result.output.map { TerminalLine(it, outputType) }
+        }
 
         _state.update {
             it.copy(
