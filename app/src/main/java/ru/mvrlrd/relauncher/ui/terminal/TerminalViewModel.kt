@@ -5,11 +5,20 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import ru.mvrlrd.relauncher.terminal.CommandRegistry
+import ru.mvrlrd.relauncher.terminal.Executor
+import ru.mvrlrd.relauncher.terminal.commands.HelpCommand
 
 class TerminalViewModel : ViewModel() {
 
     private val _state = MutableStateFlow(TerminalState())
     val state: StateFlow<TerminalState> = _state.asStateFlow()
+
+    private val executor: Executor = Executor(
+        CommandRegistry().apply {
+            register(HelpCommand())
+        },
+    )
 
     fun onInputChange(value: String) {
         _state.update { it.copy(input = value) }
@@ -20,9 +29,11 @@ class TerminalViewModel : ViewModel() {
         val command = current.input
         if (command.isBlank()) return
 
+        val result = executor.execute(command)
+        val outputType = if (result.isError) LineType.ERROR else LineType.OUTPUT
         val newLines = current.lines +
             TerminalLine(current.prompt + command, LineType.PROMPT) +
-            TerminalLine(command, LineType.OUTPUT)
+            result.output.map { TerminalLine(it, outputType) }
 
         _state.update {
             it.copy(
