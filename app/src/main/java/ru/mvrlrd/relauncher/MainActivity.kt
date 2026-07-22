@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import ru.mvrlrd.relauncher.ui.terminal.TerminalScreen
 import ru.mvrlrd.relauncher.ui.terminal.TerminalViewModel
+import ru.mvrlrd.relauncher.ui.terminal.TerminalViewModelFactory
 import ru.mvrlrd.relauncher.ui.theme.ReLauncherTheme
 
 class MainActivity : ComponentActivity() {
@@ -21,7 +22,10 @@ class MainActivity : ComponentActivity() {
         setContent {
             ReLauncherTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    val terminalViewModel: TerminalViewModel = viewModel()
+                    val component = (application as ReLauncherApp).component
+                    val terminalViewModel: TerminalViewModel = viewModel(
+                        factory = TerminalViewModelFactory(component.executor()),
+                    )
                     TerminalScreen(
                         viewModel = terminalViewModel,
                         modifier = Modifier.padding(innerPadding),
