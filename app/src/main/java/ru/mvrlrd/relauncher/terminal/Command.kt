@@ -12,9 +12,10 @@ data class CommandResult(
     }
 }
 
-/** Execution context. Extended in task 3 (cwd) and beyond. */
+/** Execution context passed to commands. */
 interface CommandContext {
     val registry: CommandRegistry
+    val session: Session
 }
 
 interface Command {
