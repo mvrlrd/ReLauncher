@@ -11,6 +11,7 @@ import ru.mvrlrd.relauncher.terminal.CommandRegistry
 import ru.mvrlrd.relauncher.terminal.Executor
 import ru.mvrlrd.relauncher.terminal.Session
 import ru.mvrlrd.relauncher.terminal.commands.CdCommand
+import ru.mvrlrd.relauncher.terminal.commands.ClearCommand
 import ru.mvrlrd.relauncher.terminal.commands.HelpCommand
 import ru.mvrlrd.relauncher.terminal.commands.LsCommand
 import ru.mvrlrd.relauncher.terminal.commands.PwdCommand
@@ -34,6 +35,7 @@ abstract class AppModule {
                 register(PwdCommand())
                 register(LsCommand())
                 register(CdCommand())
+                register(ClearCommand())
                 register(RunCommand(launchApp))
             }
 
