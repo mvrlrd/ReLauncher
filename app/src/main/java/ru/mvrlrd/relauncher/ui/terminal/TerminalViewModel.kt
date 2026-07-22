@@ -7,7 +7,10 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import ru.mvrlrd.relauncher.terminal.CommandRegistry
 import ru.mvrlrd.relauncher.terminal.Executor
+import ru.mvrlrd.relauncher.terminal.commands.CdCommand
 import ru.mvrlrd.relauncher.terminal.commands.HelpCommand
+import ru.mvrlrd.relauncher.terminal.commands.LsCommand
+import ru.mvrlrd.relauncher.terminal.commands.PwdCommand
 
 class TerminalViewModel : ViewModel() {
 
@@ -17,6 +20,9 @@ class TerminalViewModel : ViewModel() {
     private val executor: Executor = Executor(
         CommandRegistry().apply {
             register(HelpCommand())
+            register(PwdCommand())
+            register(LsCommand())
+            register(CdCommand())
         },
     )
 

@@ -7,6 +7,7 @@ import ru.mvrlrd.relauncher.terminal.parser.ParserException
 
 class Executor(
     override val registry: CommandRegistry,
+    override val session: Session = Session(),
     private val lexer: Lexer = Lexer(),
     private val parser: Parser = Parser(),
 ) : CommandContext {
