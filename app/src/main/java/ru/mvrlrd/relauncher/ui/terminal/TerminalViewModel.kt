@@ -5,26 +5,14 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
-import ru.mvrlrd.relauncher.terminal.CommandRegistry
 import ru.mvrlrd.relauncher.terminal.Executor
-import ru.mvrlrd.relauncher.terminal.commands.CdCommand
-import ru.mvrlrd.relauncher.terminal.commands.HelpCommand
-import ru.mvrlrd.relauncher.terminal.commands.LsCommand
-import ru.mvrlrd.relauncher.terminal.commands.PwdCommand
 
-class TerminalViewModel : ViewModel() {
+class TerminalViewModel(
+    private val executor: Executor,
+) : ViewModel() {
 
     private val _state = MutableStateFlow(TerminalState())
     val state: StateFlow<TerminalState> = _state.asStateFlow()
-
-    private val executor: Executor = Executor(
-        CommandRegistry().apply {
-            register(HelpCommand())
-            register(PwdCommand())
-            register(LsCommand())
-            register(CdCommand())
-        },
-    )
 
     fun onInputChange(value: String) {
         _state.update { it.copy(input = value) }
