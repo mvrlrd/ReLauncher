@@ -7,5 +7,6 @@ class VfsTree {
     init {
         root.addChild("apps")
         root.addChild("settings")
+        root.addChild("groups")
     }
 }
