@@ -4,6 +4,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertTrue
 import org.junit.Test
+import ru.mvrlrd.relauncher.domain.model.GroupApp
 import ru.mvrlrd.relauncher.domain.model.GroupDir
 import ru.mvrlrd.relauncher.domain.repository.GroupsRepository
 import ru.mvrlrd.relauncher.domain.usecase.CreateGroupDirUseCase
@@ -20,6 +21,8 @@ class MkdirCommandTest {
         override fun add(dir: GroupDir) {
             stored.add(dir)
         }
+        override fun getApps(): List<GroupApp> = emptyList()
+        override fun addApp(app: GroupApp) {}
     }
 
     private lateinit var repo: FakeGroupsRepository
